@@ -1,0 +1,100 @@
+#include <stdio.h>
+
+#define TAM_MAX 100
+
+// AJUSTE: Padronizado para 'Pilha' com 'P' maiúsculo
+struct Pilha {
+    int topo;
+    int vetor[TAM_MAX];
+};
+
+// --- OPERAÇÕES DA PILHA ---
+
+// (a) Operação VAZIA
+// AJUSTE: Padronizado para 'Pilha'
+int vazia(struct Pilha* p) {
+    return (p->topo == -1);
+}
+
+// (b) Operação EMPILHA
+void empilha(struct Pilha* p, int M) {
+    if (p->topo == TAM_MAX - 1) {
+        printf("Erro: A pilha esta cheia!\n");
+    } else {
+        p->topo++;
+        p->vetor[p->topo] = M;
+    }
+}
+
+// (c) Operação DESEMPILHA
+// AJUSTE: Corrigido o tipo de retorno para 'int' e removido o parâmetro 'M'
+int desempilha(struct Pilha* p) {
+    if (vazia(p) == 1) {
+        printf("Erro: A pilha esta vazia!\n");
+        return -1;
+    } else {
+        int valor_removido = p->vetor[p->topo];
+        p->topo--;
+        return valor_removido;
+    }
+}
+
+// (d) Operação TOPO
+// AJUSTE: Corrigido o tipo de retorno para 'int' e a sintaxe do return
+int topo(struct Pilha* p) {
+    if (vazia(p) == 1) {
+        printf("Erro: A pilha esta vazia!\n");
+        return -1;
+    } else {
+        return p->vetor[p->topo]; // Faltava o 'p' antes da seta
+    }
+}
+
+// --- FUNÇÃO MAIN ---
+int main() {
+    // AJUSTE: Padronizado para 'Pilha'
+    struct Pilha minhaPilha;
+    minhaPilha.topo = -1;
+
+    // --- Teste 1: Pilha Vazia ---
+    printf("--- Testando a Pilha Vazia ---\n");
+    if (vazia(&minhaPilha)) { // Nao precisa de '== 1', o if ja entende o resultado
+        printf("OK: A pilha esta vazia.\n");
+    }
+    printf("\nTentando olhar o topo de uma pilha vazia:\n");
+    topo(&minhaPilha);
+    printf("Tentando desempilhar de uma pilha vazia:\n");
+    desempilha(&minhaPilha);
+
+    // --- Teste 2: Empilhando ---
+    printf("\n--- Empilhando 10, 20 e 30 ---\n");
+    empilha(&minhaPilha, 10);
+    empilha(&minhaPilha, 20);
+    empilha(&minhaPilha, 30);
+    printf("Empilhamento concluido. O topo atual e: %d\n", topo(&minhaPilha));
+
+    // --- Teste 3: Desempilhando ---
+    printf("\n--- Desempilhando os elementos ---\n");
+    int valorRemovido;
+
+    valorRemovido = desempilha(&minhaPilha);
+    printf("Valor desempilhado: %d (Esperado: 30)\n", valorRemovido);
+
+    printf("O novo topo e: %d (Esperado: 20)\n", topo(&minhaPilha));
+
+    valorRemovido = desempilha(&minhaPilha);
+    printf("Valor desempilhado: %d (Esperado: 20)\n", valorRemovido);
+
+    valorRemovido = desempilha(&minhaPilha);
+    printf("Valor desempilhado: %d (Esperado: 10)\n", valorRemovido);
+
+    // --- Teste 4: Verificação Final ---
+    printf("\n--- Verificacao Final ---\n");
+    if (vazia(&minhaPilha)) {
+        printf("OK: A pilha esta vazia novamente.\n");
+    } else {
+        printf("ERRO: A pilha deveria estar vazia.\n");
+    }
+
+    return 0;
+}
