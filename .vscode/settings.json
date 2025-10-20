@@ -3,6 +3,7 @@
     "C_Cpp.default.compilerPath": "c:\\Users\\C19322Q\\OneDrive - EXPERIAN SERVICES CORP\\Documentos\\Apredendo_C\\aulas\\aula1.c",
     "files.associations": {
         "*.txt": "code-text-binary",
-        "pilha": "c"
+        "pilha": "c",
+        "stdio.h": "c"
     }
 }
