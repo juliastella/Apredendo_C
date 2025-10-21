@@ -23,27 +23,21 @@ void insere(struct Fila* p, int M) {
     if (vazia(p)) {
         printf("Fila cheia!\n");
     } else {
-        // 1. Coloca o valor M no vetor, na posição 'fim'
         p->vetor[p->fim] = M;
         
-        // 2. Avança o 'fim' para a próxima posição
         p->fim = (p->fim + 1) % TAM_MAX;
     }
 }
 
 int remover(struct Fila* p) {
-    // 1. Verificação de segurança
     if (vazia(p)) {
         printf("Fila vazia!\n");
         return -1; // Retorna um código de erro
     } else {
-        // 2. Guarda o valor que está no 'inicio'
         int valor_removido = p->vetor[p->inicio];
 
-        // 3. Avança o 'inicio' para a próxima posição (com a mágica do círculo)
         p->inicio = (p->inicio + 1) % TAM_MAX;
         
-        // 4. Retorna o valor que guardamos
         return valor_removido;
     }
 }
@@ -74,7 +68,7 @@ int main() {
     if(vazia(&minhaFila)) {
         printf("OK: Fila esta vazia.\n");
     }
-    remover(&minhaFila); // Deve imprimir erro
+    remover(&minhaFila); 
 
     return 0;
 }
