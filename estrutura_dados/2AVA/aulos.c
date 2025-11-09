@@ -64,15 +64,16 @@ Aluno* inserir_aluno_inicio_lista(Aluno* lista_antiga) {
         // 3. Ligar o Nó
         novo_aluno->proximo = lista_antiga; // Fazer o 'prox' do novo_aluno apontar para o início antigo da lista
 
-    // 4. Atualizar a Cabeça
+        // 4. Atualizar a Cabeça
         printf("\nAluno %s inserido no INICIO com sucesso!\n", novo_aluno->nome);
 
-        // Se criar_aluno() falhou (retornou NULL)
-        return lista_antiga; // Retorna a lista como estava, sem mudar
+        // *** CORREÇÃO AQUI ***
+        // Se a criação for um sucesso, devemos retornar o NOVO começo da lista
+        return novo_aluno; 
     }
 
-     // 4. Atualizar a Cabeça (Retorna o novo início da lista)
-    return novo_aluno;
+    // Se criar_aluno() falhou (retornou NULL), retorna a lista antiga
+    return lista_antiga; 
 }
 
 void exibir_lista(Aluno* lista){
@@ -105,6 +106,17 @@ void exibir_lista(Aluno* lista){
          atual = atual->proximo;
     }
     // Quando 'atual' se torna NULL, o loop para sozinho.
+}
+
+// Função auxiliar para exibir os dados de um único aluno
+void exibir_aluno(Aluno* aluno) {
+    if (aluno == NULL) return; // Segurança
+
+    printf("-----------------------------------\n");
+    printf("Matricula: %d\n", aluno->matricula);
+    printf("Nome: %s\n", aluno->nome);
+    printf("Nota Final: %.1f\n", aluno->notaFinal);
+    printf("-----------------------------------\n");
 }
 
 // 2. Inserir um(a) novo(a) aluno(a) no final da lista
@@ -144,6 +156,7 @@ Aluno* inserir_aluno_final_lista(Aluno* lista_atual) {
         return lista_atual;
 }
 
+// *** MÚLTIPLAS CORREÇÕES NESTA FUNÇÃO ***
 void remover_aluno(Aluno** lista, int matricula_remover) {
     // 1. Verificar se a lista está vazia
     if (*lista == NULL) {
@@ -153,8 +166,11 @@ void remover_aluno(Aluno** lista, int matricula_remover) {
 
     // Restante da implementação virá aqui
 
-    Aluno* atual = lista;
-    Aluno* noAnterior = lista;
+    // *** CORREÇÃO AQUI ***
+    // 'lista' é Aluno** (ponteiro duplo). Para pegar o 1º nó, usamos *lista
+    Aluno* atual = *lista; 
+    // 'noAnterior' deve começar como NULL, pois 'atual' é o primeiro nó
+    Aluno* noAnterior = NULL; 
 
     // --- PASSO LÓGICO 3: O Loop (Sua lógica!) ---
     // A condição do loop é simplesmente "enquanto não chegamos ao fim"
@@ -166,7 +182,9 @@ void remover_aluno(Aluno** lista, int matricula_remover) {
             // Caso 1: Removendo o primeiro nó
             // (Se 'noAnterior' ainda é NULL, 'atual' é o primeiro)
             if (noAnterior == NULL) { 
-                *lista_cabeca = atual->proximo; // A cabeça da lista muda
+                // *** CORREÇÃO AQUI ***
+                // O nome do parâmetro é 'lista', não 'lista_cabeca'
+                *lista = atual->proximo; // A cabeça da lista muda
             } 
             // Caso 2: Removendo um nó do meio ou fim
             else { 
@@ -183,15 +201,68 @@ void remover_aluno(Aluno** lista, int matricula_remover) {
         noAnterior = atual;
         atual = atual->proximo;
     }
-
     // --- PASSO LÓGICO 4: Se o loop terminar, não encontrou ---
     printf("\nAluno com matricula %d NAO encontrado na lista.\n", matricula_remover);
 }
 
+// 4. Buscar um(a) aluno(a) pelo número de matrícula
+void buscar_aluno(Aluno* lista, int matricula_buscar) {
+    // 1. Verificar se a lista está vazia
+    if (lista == NULL) {
+        printf("\nA lista de alunos esta vazia. Nenhum aluno para buscar\n");
+        return;
+    }
 
+    // 2. Criar ponteiro de percurso
+    Aluno* atual = lista; // (Usamos a 'lista' direto aqui)
+
+    // 3. Loop
+    while (atual != NULL) {
+        // Se encontramos a matrícula
+        if (atual->matricula == matricula_buscar) {
+            printf("\nAluno encontrado:\n");
+            exibir_aluno(atual); // Exibe o aluno encontrado
+            return; // Importante! Já encontramos, saia da função.
+        }
+        
+        // Se não encontrou, avança o ponteiro
+        atual = atual->proximo;
+    }
+
+    // 4. Se o loop terminar, não encontrou
+    printf("\nAluno com matricula %d NAO encontrado na lista.\n", matricula_buscar);
+}
+
+
+void calcular_exibir_media(Aluno* lista){
+    // 1. Verificar se a lista está vazia
+    if (lista == NULL) {
+        printf("\nA lista de alunos esta vazia. Nenhum aluno para buscar\n");
+        return;
+    }
+
+    float soma_total = 0.0;
+    int contador_alunos = 0;    
+    media = soma_total / contador_alunos;
+
+
+    // 2. Criar ponteiro de percurso
+    Aluno* atual = lista; // (Usamos a 'lista' direto aqui)
+
+    // 3. Loop
+    while (atual != NULL) {       
+        soma_total += atual->notaFinal; // Soma a nota final do aluno atual
+        contador_alunos++; // Incrementa o contador de alunos
+        
+        // Avança o ponteiro
+        atual = atual->proximo; // andar para o próximo nó
+    }
+}
 
 
 int main() {
     // nossa lista tem que começar vazia
     struct NO* lista = NULL; 
+    
+    // O menu interativo (switch-case) viria aqui
 }
