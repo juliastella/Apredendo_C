@@ -272,6 +272,88 @@ void calcular_exibir_media(Aluno* lista){
     printf("------------------------------------\n");
 }
 
+/// FUNÇÃO AUXILIAR: Troca os dados entre dois nós
+// (Necessária para a ordenação)
+void trocar_dados(Aluno* noA, Aluno* noB) {
+    // 1. Cria variáveis temporárias para guardar os dados do 'noA'
+    int temp_matricula = noA->matricula;
+    float temp_nota = noA->notaFinal;
+    char temp_nome[101];
+    strcpy(temp_nome, noA->nome); // Copia a string
+
+    // 2. Copia os dados do 'noB' para dentro do 'noA'
+    noA->matricula = noB->matricula;
+    noA->notaFinal = noB->notaFinal;
+    strcpy(noA->nome, noB->nome);
+
+    // 3. Copia os dados temporários (que eram do 'noA') para dentro do 'noB'
+    noB->matricula = temp_matricula;
+    noB->notaFinal = temp_nota;
+    strcpy(noB->nome, temp_nome);
+}
+
+// 7. Ordenar a lista de aluno(a)s
+void ordenar_lista(Aluno* lista) {
+    
+    // 1. Checar se a lista está vazia ou tem só 1 item
+    if (lista == NULL || lista->proximo == NULL) {
+        printf("\nLista vazia ou com um unico aluno. Nao ha o que ordenar.\n");
+        return;
+    }
+
+    // 2. Perguntar ao usuário como ordenar
+    int escolha = 0;
+    printf("\n--- Opcoes de Ordenacao ---\n");
+    printf("1. Ordenar por Nome (A-Z)\n");
+    printf("2. Ordenar por Nota (Menor para Maior)\n");
+    printf("Escolha uma opcao: ");
+    scanf("%d", &escolha);
+
+    // 3. Criar os ponteiros de percurso
+    Aluno* atual;
+    Aluno* proximo_no;
+    
+    // --- O LOOP EXTERNO (O "Dedo 1" travado) ---
+    // 'atual' começa na cabeça da lista e vai até o PENÚLTIMO nó
+    for (atual = lista; atual->proximo != NULL; atual = atual->proximo) {
+        
+        // --- O LOOP INTERNO (O "Dedo 2" viajante) ---
+        // 'proximo_no' começa SEMPRE à frente do 'atual' e vai até o FIM
+        for (proximo_no = atual->proximo; proximo_no != NULL; proximo_no = proximo_no->proximo) {
+                        
+            // Se a escolha foi NOME
+            if (escolha == 1) {
+                // strcmp compara strings:
+                // > 0 significa que 'atual->nome' vem DEPOIS de 'proximo_no->nome'
+                if (strcmp(atual->nome, proximo_no->nome) > 0) {
+                    // Troca os dados
+                    trocar_dados(atual, proximo_no);
+                }
+            } 
+            // Se a escolha foi NOTA
+            else if (escolha == 2) {
+                // Se a nota do 'atual' for MAIOR que a do 'proximo_no'
+                if (atual->notaFinal > proximo_no->notaFinal) {
+                    // Troca os dados
+                    trocar_dados(atual, proximo_no);
+                }
+            }
+        } // Fim do loop interno (proximo_no)
+    } // Fim do loop externo (atual)
+
+    // 5. Feedback
+    if (escolha == 1) {
+        printf("\nLista ordenada por NOME com sucesso!\n");
+    } else if (escolha == 2) {
+        printf("\nLista ordenada por NOTA com sucesso!\n");
+    } else {
+        printf("\nOpcao invalida. Nenhuma ordenacao foi feita.\n");
+    }
+    
+    // Mostra o resultado
+    exibir_lista(lista);
+}
+
 
 int main() {
     // nossa lista tem que começar vazia
