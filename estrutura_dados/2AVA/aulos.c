@@ -108,7 +108,7 @@ void exibir_lista(Aluno* lista){
 }
 
 // 2. Inserir um(a) novo(a) aluno(a) no final da lista
-    Aluno* inserir_aluno_final_lista(Aluno* lista_atual) {
+Aluno* inserir_aluno_final_lista(Aluno* lista_atual) {
 
         // 1. Cria o novo aluno (usando nossa função auxiliar)
         Aluno* novo_aluno = criar_aluno();
@@ -142,8 +142,52 @@ void exibir_lista(Aluno* lista){
         // 5. Retornar
         // O começo da lista (lista_atual) NÃO MUDOU, então retornamos ele.
         return lista_atual;
+}
+
+void remover_aluno(Aluno** lista, int matricula_remover) {
+    // 1. Verificar se a lista está vazia
+    if (*lista == NULL) {
+        printf("A lista de alunos está vazia. Nenhum aluno para remover.\n");
+        return;
     }
-    
+
+    // Restante da implementação virá aqui
+
+    Aluno* atual = lista;
+    Aluno* noAnterior = lista;
+
+    // --- PASSO LÓGICO 3: O Loop (Sua lógica!) ---
+    // A condição do loop é simplesmente "enquanto não chegamos ao fim"
+    while (atual != NULL) {
+
+        // Se encontramos a matrícula
+        if (atual->matricula == matricula_remover) {
+            
+            // Caso 1: Removendo o primeiro nó
+            // (Se 'noAnterior' ainda é NULL, 'atual' é o primeiro)
+            if (noAnterior == NULL) { 
+                *lista_cabeca = atual->proximo; // A cabeça da lista muda
+            } 
+            // Caso 2: Removendo um nó do meio ou fim
+            else { 
+                noAnterior->proximo = atual->proximo; // "Pula" o nó 'atual'
+            }
+            
+            // Libera a memória do nó removido
+            free(atual); 
+            printf("\nAluno com matricula %d removido com sucesso.\n", matricula_remover);
+            return; // Importante! Já removemos, saia da função.
+        }
+        
+        // Se não encontrou, avança os ponteiros para a próxima checagem
+        noAnterior = atual;
+        atual = atual->proximo;
+    }
+
+    // --- PASSO LÓGICO 4: Se o loop terminar, não encontrou ---
+    printf("\nAluno com matricula %d NAO encontrado na lista.\n", matricula_remover);
+}
+
 
 
 
