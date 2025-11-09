@@ -1,29 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// --- Estrutura do Nó da Árvore ---
 typedef struct Node {
     int data;
     struct Node* left;
     struct Node* right;
 } Node;
 
-// --- Estruturas da Fila (para auxiliar na construção) ---
-// Nó da fila (armazena um ponteiro para um nó da árvore)
 typedef struct QNode {
     Node* treeNode;
     struct QNode* next;
 } QNode;
 
-// A Fila em si
+
 typedef struct Queue {
     QNode* front;
     QNode* rear;
 } Queue;
 
-// --- Funções Auxiliares (Árvore e Fila) ---
 
-// Cria um novo nó da árvore
 Node* createTreeNode(int data) {
     Node* newNode = (Node*)malloc(sizeof(Node));
     if (newNode == NULL) {
@@ -36,7 +31,6 @@ Node* createTreeNode(int data) {
     return newNode;
 }
 
-// Cria uma nova fila vazia
 Queue* createQueue() {
     Queue* q = (Queue*)malloc(sizeof(Queue));
     if (q == NULL) {
