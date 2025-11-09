@@ -257,6 +257,19 @@ void calcular_exibir_media(Aluno* lista){
         // Avança o ponteiro
         atual = atual->proximo; // andar para o próximo nó
     }
+    // O loop termina quando 'atual' se torna NULL.
+
+    // PASSO 5: O Cálculo (A "Boca do Caixa")
+    // SÓ AGORA, DEPOIS que o loop terminou, nós temos os totais.
+    // Agora podemos calcular a média.
+    float media = soma_total / (float)contador_alunos; // (float) garante a divisão com casas decimais
+
+    // PASSO 6: Exibir os resultados
+    printf("\n---------- MEDIA DA TURMA ----------\n");
+    printf("Numero total de alunos: %d\n", contador_alunos);
+    printf("Soma total das notas: %.1f\n", soma_total);
+    printf("Media geral da turma: %.1f\n", media);
+    printf("------------------------------------\n");
 }
 
 
