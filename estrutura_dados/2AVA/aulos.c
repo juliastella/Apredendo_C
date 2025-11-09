@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> 
+#include <string.h>// para usar malloc e free, strlen
 
 // vamos definir os nossos dados
 typedef struct NO{
@@ -9,7 +10,7 @@ typedef struct NO{
   struct NO* proximo; // ponteiro para o nosso próximo nó que é onde está o próximo dado
 }Aluno;
 
-int inserir_aluno_inicio_lista(sstruct NO* aluno_inicio) {
+Aluno* inserir_aluno_inicio_lista(Aluno* lista_antiga) {
     // implementar a função de inserção no início da lista circular
 
     // 1. Alocar a memória
@@ -38,11 +39,17 @@ int inserir_aluno_inicio_lista(sstruct NO* aluno_inicio) {
      if (len > 0 && novo_aluno->nome[len - 1] == '\n') {
          novo_aluno->nome[len - 1] = '\0';
      }
-     
+
      printf("Digite a nota final do aluno: ");
      scanf("%f", &novo_aluno->notaFinal); // lê a nota final do aluno e armazena no campo notaFinal do novo_aluno
 
+     // 3. Ligar o Nó:
+    // Fazer o 'prox' do novo_aluno apontar para o início antigo da lista
 
+    novo_aluno->proximo = lista_antiga;
+
+     // 4. Atualizar a Cabeça (Retorna o novo início da lista)
+    return novo_aluno;
 }
 
 
