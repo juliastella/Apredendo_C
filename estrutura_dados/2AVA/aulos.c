@@ -354,10 +354,92 @@ void ordenar_lista(Aluno* lista) {
     exibir_lista(lista);
 }
 
+// --- FUNÇÃO PRINCIPAL ---
 
 int main() {
     // nossa lista tem que começar vazia
-    struct NO* lista = NULL; 
+    Aluno* lista = NULL; 
+    int opcao = 0;
+    int matricula_temp; // Variável para ler matrículas
+
+    do {
+        // 26. O programa deve apresentar um menu interativo
+        printf("\n\n===== SISTEMA DE CADASTRO DE ALUNOS (UFRPE) =====\n");
+        printf("1. Inserir aluno no INICIO\n");
+        printf("2. Inserir aluno no FINAL\n");
+        printf("3. Remover aluno (por Matricula)\n");
+        printf("4. Buscar aluno (por Matricula)\n");
+        printf("5. Exibir lista completa\n");
+        printf("6. Calcular media da turma\n");
+        printf("7. Ordenar lista (por Nome ou Nota)\n");
+        printf("0. Sair do programa\n");
+        printf("===================================================\n");
+        printf("Escolha uma opcao: ");
+        
+        scanf("%d", &opcao);
+
+        // Limpa o buffer do 'Enter' após o scanf da opção
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+
+        switch (opcao) {
+            case 1:
+                // Atualiza o ponteiro 'lista' com o novo começo
+                lista = inserir_aluno_inicio_lista(lista);
+                break;
+            
+            case 2:
+                // Atualiza 'lista' (pode mudar se estava vazia)
+                lista = inserir_aluno_final_lista(lista);
+                break;
+
+            case 3:
+                printf("Digite a matricula a ser REMOVIDA: ");
+                scanf("%d", &matricula_temp);
+                // Passamos o ENDEREÇO da 'lista' (&lista)
+                remover_aluno(&lista, matricula_temp);
+                break;
+
+            case 4:
+                printf("Digite a matricula a ser BUSCADA: ");
+                scanf("%d", &matricula_temp);
+                buscar_aluno(lista, matricula_temp);
+                break;
+
+            case 5:
+                exibir_lista(lista);
+                break;
+            
+            case 6:
+                calcular_media(lista);
+                break;
+
+            case 7:
+                ordenar_lista(lista);
+                break;
+
+            case 0:
+                printf("\nEncerrando o programa...\n");
+                break;
+            
+            default:
+                printf("\nOpcao invalida! Tente novamente.\n");
+        }
+
+    } while (opcao != 0);
+
+    // --- LIBERAÇÃO DE MEMÓRIA (MUITO IMPORTANTE) ---
+    // Antes de sair, devemos liberar toda a memória alocada
+    printf("Liberando memoria...\n");
+    Aluno* atual = lista;
+    Aluno* proximo_no_liberar;
     
-    // O menu interativo (switch-case) viria aqui
+    while (atual != NULL) {
+        proximo_no_liberar = atual->proximo; // Guarda o próximo
+        free(atual); // Libera o atual
+        atual = proximo_no_liberar; // Pula para o próximo
+    }
+    printf("Memoria liberada. Ate logo!\n");
+
+    return 0;
 }
