@@ -243,14 +243,12 @@ void calcular_exibir_media(Aluno* lista){
 
     float soma_total = 0.0;
     int contador_alunos = 0;    
-    media = soma_total / contador_alunos;
-
 
     // 2. Criar ponteiro de percurso
     Aluno* atual = lista; // (Usamos a 'lista' direto aqui)
 
     // 3. Loop
-    while (atual != NULL) {       
+    while (atual != NULL) {   
         soma_total += atual->notaFinal; // Soma a nota final do aluno atual
         contador_alunos++; // Incrementa o contador de alunos
         
@@ -411,7 +409,7 @@ int main() {
                 break;
             
             case 6:
-                calcular_media(lista);
+                calcular_exibir_media(lista);
                 break;
 
             case 7:
