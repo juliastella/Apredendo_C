@@ -67,8 +67,6 @@ Aluno* inserir_aluno_inicio_lista(Aluno* lista_antiga) {
         // 4. Atualizar a Cabeça
         printf("\nAluno %s inserido no INICIO com sucesso!\n", novo_aluno->nome);
 
-        // *** CORREÇÃO AQUI ***
-        // Se a criação for um sucesso, devemos retornar o NOVO começo da lista
         return novo_aluno; 
     }
 
@@ -156,7 +154,6 @@ Aluno* inserir_aluno_final_lista(Aluno* lista_atual) {
         return lista_atual;
 }
 
-// *** MÚLTIPLAS CORREÇÕES NESTA FUNÇÃO ***
 void remover_aluno(Aluno** lista, int matricula_remover) {
     // 1. Verificar se a lista está vazia
     if (*lista == NULL) {
@@ -166,13 +163,12 @@ void remover_aluno(Aluno** lista, int matricula_remover) {
 
     // Restante da implementação virá aqui
 
-    // *** CORREÇÃO AQUI ***
     // 'lista' é Aluno** (ponteiro duplo). Para pegar o 1º nó, usamos *lista
     Aluno* atual = *lista; 
     // 'noAnterior' deve começar como NULL, pois 'atual' é o primeiro nó
     Aluno* noAnterior = NULL; 
 
-    // --- PASSO LÓGICO 3: O Loop (Sua lógica!) ---
+    // --- PASSO LÓGICO 3: O Loop  ---
     // A condição do loop é simplesmente "enquanto não chegamos ao fim"
     while (atual != NULL) {
 
@@ -182,7 +178,6 @@ void remover_aluno(Aluno** lista, int matricula_remover) {
             // Caso 1: Removendo o primeiro nó
             // (Se 'noAnterior' ainda é NULL, 'atual' é o primeiro)
             if (noAnterior == NULL) { 
-                // *** CORREÇÃO AQUI ***
                 // O nome do parâmetro é 'lista', não 'lista_cabeca'
                 *lista = atual->proximo; // A cabeça da lista muda
             } 
